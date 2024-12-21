@@ -1,0 +1,9 @@
+name: exam_ShopPlugin
+version: '1.0-SNAPSHOT'
+main: net.efcrafterz.exam_ShopPlugin.Exam_ShopPlugin
+api-version: '1.21'
+
+commands:
+  shop:
+    description: A simple custom command
+    usage: /<command>

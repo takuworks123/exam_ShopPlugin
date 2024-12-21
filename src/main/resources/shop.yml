@@ -1,0 +1,19 @@
+test_shop:
+  name: テストの所ppy
+  items:
+    stone:
+      amount: 64
+      price: 10
+    stone_sword:
+      amount: 1
+      price: 30
+
+test_shop_2:
+  name: テストの所ppy2
+  items:
+    stone:
+      amount: 32
+      price: 20
+    stone_sword:
+      amount: 2
+      price: 60
