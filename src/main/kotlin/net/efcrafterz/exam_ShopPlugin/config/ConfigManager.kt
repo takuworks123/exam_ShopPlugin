@@ -1,4 +1,4 @@
-package net.efcrafterz.exam_ShopPlugin.Config
+package net.efcrafterz.exam_ShopPlugin.config
 
 import net.efcrafterz.exam_ShopPlugin.Exam_ShopPlugin
 import org.bukkit.configuration.file.FileConfiguration

@@ -1,42 +1,28 @@
 package net.efcrafterz.exam_ShopPlugin
 
-import net.efcrafterz.exam_ShopPlugin.InvItemClasses.BackItem
-import net.efcrafterz.exam_ShopPlugin.InvItemClasses.ForwardItem
-import net.efcrafterz.exam_ShopPlugin.InvItemClasses.PurchasableItem
+import net.efcrafterz.exam_ShopPlugin.config.ShopConfig
+import net.efcrafterz.exam_ShopPlugin.inventoryitem.BackItem
+import net.efcrafterz.exam_ShopPlugin.inventoryitem.ForwardItem
 import org.bukkit.Material
 import org.bukkit.entity.Player
-import xyz.xenondevs.invui.gui.Gui
 import xyz.xenondevs.invui.gui.PagedGui
 import xyz.xenondevs.invui.gui.structure.Markers
-import xyz.xenondevs.invui.item.builder.ItemBuilder
-import xyz.xenondevs.invui.item.impl.SimpleItem
 import xyz.xenondevs.invui.window.Window
+import xyz.xenondevs.invui.item.Item as ItemInvUI
 
-class ShopController(private val player: Player, private val shopId: String) {
+class ShopController(private val shopId: String, private val shopConfig: ShopConfig) {
+
+    private val gui: PagedGui<ItemInvUI>
+    private val shop = shopConfig.dataMap[shopId] ?: Shop()
 
     init {
-        view()
-    }
-
-    fun view() {
-        player.sendMessage(shopId)
-
-        val item = Item(Material.DIAMOND, "§6最強ソード",
+        val item = Item(Material.DIAMOND_SWORD, "§6最強ソード",
             listOf("§7この剣は強力な力を持っている", "§6冒険に必須のアイテム"))
-
-        player.inventory.addItem(item.get())
-
-
-        val items = listOf(
-            PurchasableItem(item, 100, 1)
-            )
-
-        // for
 
         val border = Item(Material.GRAY_STAINED_GLASS_PANE, "").get()
 
 // create the gui
-        val gui = PagedGui.items()
+        gui = PagedGui.items()
             .setStructure(
                 "# # # # # # # # #",
                 "# x x x x x x x #",
@@ -48,43 +34,14 @@ class ShopController(private val player: Player, private val shopId: String) {
             .addIngredient('#', border)
             .addIngredient('<', BackItem())
             .addIngredient('>', ForwardItem())
-            .setContent(items)
+            .setContent(shop.items)
             .build()
-
-        val window = Window.single()
-            .setViewer(player)
-            .setTitle("InvUI")
-            .setGui(gui)
-            .build()
-
-        window.open()
     }
 
-
-
-
-
-    fun view2() {
-        player.sendMessage(shopId)
-
-        val item = Item(Material.DIAMOND, "§6最強ソード",
-            listOf("§7この剣は強力な力を持っている", "§6冒険に必須のアイテム"))
-        player.inventory.addItem(item.get())
-
-        val gui = Gui.normal()
-            .setStructure(
-                "# # # # # # # # #",
-                "# d . . . . . . #",
-                "# . . . . . . . #",
-                "# # # # # # # # #"
-            )
-            .addIngredient('#', SimpleItem(ItemBuilder(Material.BLACK_STAINED_GLASS_PANE)))
-            .addIngredient('d', PurchasableItem(item, 100, 1))
-            .build()
-
+    fun open(player: Player) {
         val window = Window.single()
             .setViewer(player)
-            .setTitle("InvUI")
+            .setTitle(shop.name)
             .setGui(gui)
             .build()
 

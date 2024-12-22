@@ -5,7 +5,7 @@ import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import java.util.*
 
-class CommandHandler {
+class CommandHandler(private val plugin: Exam_ShopPlugin) {
     // コマンドの実装
     fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
         val player = sender as Player
@@ -20,7 +20,7 @@ class CommandHandler {
     private fun openShop(player: Player, argsCount: Int, args: Array<out String>?): Boolean {
         if (argsCount <= 0) { return false }
 
-        ShopController(player, args!![0])
+        ShopController(args!![0], plugin.shopConfig).open(player)
         player.sendMessage("open shop [${args[0]}]")
 
         return true

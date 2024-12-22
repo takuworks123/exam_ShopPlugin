@@ -1,6 +1,6 @@
 package net.efcrafterz.exam_ShopPlugin
 
-import net.efcrafterz.exam_ShopPlugin.Config.ShopConfig
+import net.efcrafterz.exam_ShopPlugin.config.ShopConfig
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.plugin.java.JavaPlugin
@@ -8,8 +8,8 @@ import xyz.xenondevs.invui.InvUI
 
 class Exam_ShopPlugin : JavaPlugin() {
 
-    private lateinit var shopConfig: ShopConfig
-    private val commandHandler = CommandHandler()
+    val shopConfig: ShopConfig = ShopConfig(this, "shop.yml")
+    private val commandHandler = CommandHandler(this)
 
     override fun onEnable() {
         // Plugin startup logic
@@ -19,7 +19,7 @@ class Exam_ShopPlugin : JavaPlugin() {
         logger.severe(config.getString("testt"))
 
         loadConfig()
-        ShopConfig(this, "shop.yml")
+
 
         InvUI.getInstance().setPlugin(this);
 
